@@ -1,0 +1,44 @@
+.editable {
+  border: solid lightgrey 1px;
+  padding: 2px;
+  margin-bottom: 2px;
+}
+
+.editable .input-group-text {
+  cursor: pointer;
+}
+
+.editable input {
+  border: none;
+}
+
+.editable input, .editable textarea {
+  margin: auto;
+  width: 80%;
+}
+
+.editable .editableSubDiv {
+    display: block;
+}
+
+.accordion {
+  width: 100%;
+  overflow-y: auto;
+  max-height: 30em;
+}
+
+.remove-icon {
+    float: right;
+    cursor: pointer;
+}
+
+.max20 {
+    width: 20%;
+    min-width: 100px;
+    margin-right: 1em;
+}
+
+.max20 span {
+    width: 100%;
+    overflow-x: auto;
+}

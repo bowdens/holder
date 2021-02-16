@@ -1,0 +1,8 @@
+footer a {
+    color: gray;
+    font-size: 12px;
+}
+
+footer a:hover {
+    color: black;
+}

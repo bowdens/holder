@@ -1,57 +1,73 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
 import './App.css';
+import { Route, BrowserRouter as Router, Switch, Link, Redirect } from "react-router-dom";
+import Bag from "./features/bag/Bag";
+import BagSettings from "./features/bag/BagSettings";
+
+import Container from "react-bootstrap/Container";
+import ConnectToBag from './components/ConnectToBag';
+import CreateBag from './components/CreateBag';
+import { useSelector } from 'react-redux';
+import { selectCurrentCode } from './features/auth/authSlice';
+import TopNav from './components/TopNav';
+import Toasts from "./features/toasts/Toasts";
+import { useEffect } from 'react';
+import { createOrGetSocket } from './socket';
+import RecentBags from './components/RecentBags';
+import About from "./pages/About";
+import Legal from './pages/Legal';
+import Footer from './components/Footer';
+import Contact from './pages/Contact';
+import Feedback from './pages/Feedback';
 
 function App() {
+  const currentCode = useSelector(selectCurrentCode);
+
+  useEffect(() => {
+    console.log("creating or getting socket");
+    const { socket } = createOrGetSocket();
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <Router>
+      <TopNav />
+      <Container>
+        <Switch>
+          <Route path="/bag/:code/settings">
+            <BagSettings />
+          </Route>
+          <Route path="/bag/:code">
+            <Bag />
+          </Route>
+          <Route path="/about">
+            <About />
+          </Route>
+          <Route path="/legal">
+            <Legal />
+          </Route>
+          <Route path="/contact">
+            <Contact />
+          </Route>
+          <Route path="/feedback">
+            <Feedback />
+          </Route>
+          <Route exact path="/">
+            {currentCode === null ?
+              <>
+                <ConnectToBag />
+                <hr />
+                <RecentBags />
+                <hr />
+                <CreateBag />
+              </>
+              :
+              <Redirect to={`/bag/${currentCode}`} />
+            }
+          </Route>
+        </Switch>
+        <Toasts />
+      </Container>
+      <Footer />
+    </Router>
   );
 }
 
