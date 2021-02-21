@@ -132,16 +132,21 @@ const updateItem = (db, code, name, item) => {
 
 const addItem = (db, code, item) => {
     // todo: check first for duplicate names of items in array
+    console.log(`addItem: ${code}`);
+    console.log(item);
     const collection = db.collection("bags");
     return new Promise(async (resolve, reject) => {
         const n = await collection.countDocuments({code, "bag.items.name": item.name})
         if (n !== 0) {
-            return reject(`There was already an item in the bag called ${name}`)
+            console.log(`error: already item called ${item.name}`);
+            return reject(`There was already an item in the bag called ${item.name}`)
         }
         collection.findOneAndUpdate(
             { code }, { $push: { "bag.items": item } }, { returnOriginal: false },
             (err, bag) => {
                 if (err !== null) {
+                    console.log(`error:`);
+                    console.log(err);
                     return reject(err);
                 }
                 return resolve(bag.value);

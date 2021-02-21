@@ -1,8 +1,14 @@
-const io = require('socket.io')(5000, {
-    cors: {
-        origin: "http://localhost:3000"
-    }
-});
+const fs = require('fs');
+const path = require('path');
+const express = require('express');
+
+const app = express();
+const server = require('https').createServer({
+    key: fs.readFileSync('./localhost.key'),
+    cert: fs.readFileSync('./localhost.crt')
+}, app);
+
+const io = require('socket.io')(server, {serveClient: false});
 
 const { v4: uuidv4 } = require('uuid');
 
@@ -137,4 +143,16 @@ io.on('connection', socket => {
                 });
             });
     });
+});
+
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+app.get("*", (req, res) => {
+    console.log("got page request")
+    res.sendFile(path.join(__dirname + "/client/build/index.html"));
+});
+
+
+server.listen(5000, () => {
+    console.info("App listening on 5000");
 });
