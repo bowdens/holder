@@ -25,7 +25,7 @@ const addPreviousBag = (code, name) => {
 };
 
 export const createSocket = () => {
-    socket = socketIOClient("ws://localhost:5000");
+    socket = socketIOClient("/");
     socket.on("connection", socket => {
         console.log(`connection got: ${socket}`);
     });

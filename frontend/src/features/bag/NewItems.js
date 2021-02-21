@@ -100,9 +100,6 @@ export const NewCustom = () => {
                         disabled={!validItem}
                         onClick={() => {
                             dispatch(addItem({ item: { name, quantity, description } }));
-                            setName("");
-                            setQuantity(1);
-                            setDescription("");
                         }}>
                         Add Item
                         </Button>

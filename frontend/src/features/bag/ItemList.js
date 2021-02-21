@@ -100,7 +100,6 @@ const ItemList = ({ children, Element }) => {
                     }</>
                 }
             </Accordion>
-            <EditableModal />
         </>
     );
 }
