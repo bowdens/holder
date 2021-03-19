@@ -18,6 +18,7 @@ import Legal from './pages/Legal';
 import Footer from './components/Footer';
 import Contact from './pages/Contact';
 import Feedback from './pages/Feedback';
+import NotFound from './pages/NotFound';
 
 function App() {
   const currentCode = useSelector(selectCurrentCode);
@@ -62,6 +63,9 @@ function App() {
               :
               <Redirect to={`/bag/${currentCode}`} />
             }
+          </Route>
+          <Route path="*">
+            <NotFound />
           </Route>
         </Switch>
         <Toasts />

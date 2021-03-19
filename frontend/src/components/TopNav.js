@@ -15,6 +15,7 @@ import Container from "react-bootstrap/Container";
 const TopNav = () => {
     const dispatch = useDispatch();
     const nickname = useSelector(selectNickname);
+    const validNickname = nickname.length > 0 && nickname.length <= 32;
 
     return (
         <Navbar style={{ marginBottom: "10px" }} bg="primary">
@@ -27,7 +28,7 @@ const TopNav = () => {
                             dispatch(setCachedPassword({ cachedPassword: null }));
                             dispatch(setPasswordFor({ cachedPasswordFor: null }));
                         }}>
-                        Holder!
+                        Extradimension.al
                 </Navbar.Brand>
                 </LinkContainer>
                 <Navbar.Toggle />
@@ -40,10 +41,15 @@ const TopNav = () => {
                             type="text"
                             placeholder="Set Nickname"
                             defaultValue={nickname}
+                            invalid={!validNickname}
+                            maxLength="32"
                             onChange={e => {
-                                dispatch(setNickname({ nickname: e.target.value }));
+                                dispatch(setNickname({ nickname: e.target.value.trim() }));
                             }}
                         />
+                        <Form.Control.Feedback type="invalid">
+                            Nicknames must be between 1 and 32 characters.
+                        </Form.Control.Feedback>
                     </Form>
                 </Navbar.Collapse>
             </Container>

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { Helmet } from "react-helmet";
 
 import {
     setPending,
@@ -8,7 +9,6 @@ import {
     selectBag,
     selectError
 } from "./bagSlice";
-
 
 import SettingsIcon from "@material-ui/icons/Settings";
 
@@ -29,6 +29,7 @@ const Bag = () => {
     const pending = useSelector(selectBagPending);
     const bagError = useSelector(selectError);
     const nickname = useSelector(selectNickname);
+    const location = useLocation();
 
 
     useEffect(() => {
@@ -41,6 +42,13 @@ const Bag = () => {
 
     return (
         <>
+            <Helmet>
+                <title>Bag {code}</title>
+                <meta property="og:title" content="extradimension.al - Shared Bag" />
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content={location} />
+                <meta property="og:description" content={`Bag ${code} has been shared with you.`} />
+            </Helmet>
             <Row>
             </Row>
             {bag === null ?

@@ -1,9 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import monsters from "./monsters";
-
-const getRandomName = () => {
-    return "Anonymous " + monsters[Math.floor(Math.random() * monsters.length)];
-}
+import { getRandomName } from "./monsters";
 
 export const authSlice = createSlice({
     name: 'auth',
@@ -11,7 +7,7 @@ export const authSlice = createSlice({
         cachedPassword: null,
         cachedPasswordFor: null,
         currentCode: null,
-        nickname: getRandomName()
+        nickname: "Anonymous " + getRandomName()
     },
     reducers: {
         setCachedPassword: (state, action) => {
@@ -31,7 +27,7 @@ export const authSlice = createSlice({
             state.nickname = nickname;
         },
         setRandomNickname: (state, action) => {
-            state.nickname = getRandomName();
+            state.nickname = "Anonymous " + getRandomName();
         }
     }
 });

@@ -59,12 +59,9 @@ export const createSocket = () => {
 
 export const createOrGetSocket = () => {
     if (socket !== null) return { socket };
-    console.log("creating new socket");
     createSocket();
     return { socket };
 }
 export const getSocket = () => {
-    console.log(`socket requested:`);
-    console.log(socket);
     return { socket };
 };
