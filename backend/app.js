@@ -153,7 +153,7 @@ io.on('connection', socket => {
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.get("*", (req, res) => {
-    console.log("got page request")
+    console.log("got page request for " + req.path);
     res.sendFile(path.join(__dirname + "/client/build/index.html"));
 });
 
