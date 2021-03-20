@@ -114,9 +114,11 @@ const updateItem = (db, code, name, item) => {
     // todo check first for duplicate names in items
     const collection = db.collection("bags");
     return new Promise(async (resolve, reject) => {
-        const n = await collection.countDocuments({code, "bag.items.name": item.name})
-        if (n !== 0) {
-            return reject(`There was already an item in the bag called ${name}`)
+        if (name !== item.name) {
+            const n = await collection.countDocuments({ code, "bag.items.name": item.name })
+            if (n !== 0) {
+                return reject(`There was already an item in the bag called ${item.name}.`)
+            }
         }
         collection.findOneAndUpdate(
             { code, "bag.items.name": name }, { $set: { "bag.items.$": item } }, { returnOriginal: false },
@@ -134,9 +136,18 @@ const addItem = (db, code, item) => {
     // todo: check first for duplicate names of items in array
     console.log(`addItem: ${code}`);
     console.log(item);
-    const collection = db.collection("bags");
     return new Promise(async (resolve, reject) => {
-        const n = await collection.countDocuments({code, "bag.items.name": item.name})
+        const itemCount = db.collection("itemCount")
+        const doc = await itemCount.find({code});
+        if (doc) {
+            if (doc.count >= 256) {
+                return reject(`Bag ${code} has reached its item capacity. Please remove some items before adding more.`);
+            }
+        } else {
+            return reject(`Could not find a bag with code ${code}`);
+        }
+        const collection = db.collection("bags");
+        const n = await collection.countDocuments({ code, "bag.items.name": item.name });
         if (n !== 0) {
             console.log(`error: already item called ${item.name}`);
             return reject(`There was already an item in the bag called ${item.name}`)

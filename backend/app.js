@@ -39,12 +39,13 @@ io.on('connection', socket => {
     socket.on("join_bag", data => {
         console.log("bag joined...");
         console.log(data);
-        const { code, nickname } = data;
+        const { code, _nickname } = data;
+        const nickname = _nickname ? _nickname.substring(0,32) : "Anonymous"
         findBag(db, code.toUpperCase())
             .then(bag => {
                 io.to(code).emit("toast", {
                     header: "New User",
-                    content: `${nickname || socket.id} connected`,
+                    content: `${nickname} connected`,
                     key: uuidv4()
                 });
                 socket.join(code);
@@ -68,13 +69,14 @@ io.on('connection', socket => {
     });
 
     socket.on("update_bag", (data) => {
-        const { code, update, nickname } = data;
+        const { code, update, _nickname } = data;
+        const nickname = _nickname ? _nickname.substring(0,32) : "Anonymous"
         updateBag(db, code.toUpperCase(), update)
             .then(bag => {
                 io.to(code).emit("bag", bag.bag);
                 io.to(code).emit("toast", {
                     header: "Bag Updated",
-                    content: `${nickname || socket.id} updated the bag`,
+                    content: `${nickname} updated the bag`,
                     key: uuidv4()
                 });
             })
@@ -86,13 +88,14 @@ io.on('connection', socket => {
     });
 
     socket.on("remove_item", data => {
-        const { code, name, nickname } = data;
+        const { code, name, _nickname } = data;
+        const nickname = _nickname ? _nickname.substring(0,32) : "Anonymous"
         removeItem(db, code.toUpperCase(), name)
             .then(bag => {
                 io.to(code).emit("bag", bag.bag);
                 io.to(code).emit("toast", {
                     header: "Item Removed",
-                    content: `${nickname || socket.id} removed ${name}`,
+                    content: `${nickname} removed ${name}`,
                     key: uuidv4()
                 });
             })
@@ -106,13 +109,14 @@ io.on('connection', socket => {
     });
 
     socket.on("update_item", data => {
-        const { code, name, item, nickname } = data;
+        const { code, name, item, _nickname } = data;
+        const nickname = _nickname ? _nickname.substring(0,32) : "Anonymous"
         updateItem(db, code.toUpperCase(), name, item)
             .then(bag => {
                 io.to(code).emit("bag", bag.bag);
                 io.to(code).emit("toast", {
                     header: "Item Modified",
-                    content: `${nickname || socket.id} modified ${name} ${name !== item.name ? `=> ${item.name}` : ""}`,
+                    content: `${nickname} modified ${name} ${name !== item.name ? `=> ${item.name}` : ""}`,
                     key: uuidv4()
                 });
             })
@@ -127,13 +131,14 @@ io.on('connection', socket => {
 
     socket.on("append_item", data => {
         console.log("append_item called");
-        const { code, item, nickname } = data;
+        const { code, item, _nickname } = data;
+        const nickname = _nickname ? _nickname.substring(0,32) : "Anonymous";
         addItem(db, code.toUpperCase(), item)
             .then(bag => {
                 io.to(code).emit("bag", bag.bag);
                 io.to(code).emit("toast", {
                     header: "Item Added",
-                    content: `${nickname || socket.id} added a ${item.name}.`,
+                    content: `${nickname} added a ${item.name}.`,
                     key: uuidv4()
                 });
             })
