@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useParams, Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
+import logo from "../../logo.svg";
 
 import {
     setPending,
@@ -48,6 +49,7 @@ const Bag = () => {
                 <meta property="og:type" content="website" />
                 <meta property="og:url" content={location} />
                 <meta property="og:description" content={`Bag ${code} has been shared with you.`} />
+                <meta property="og:image" content={logo} />
             </Helmet>
             <Row>
             </Row>

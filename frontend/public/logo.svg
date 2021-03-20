@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="SVGRoot" width="2048" height="2048" version="1.1" viewBox="0 0 2048 2048" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <clipPath id="clipPath1056">
+   <rect x="-226.77" y="1515.9" width="2274.8" height="1269.6" display="none" fill="#00f" fill-rule="evenodd" stroke-width="1.2732"/>
+   <path class="powerclip" d="m128.85 443.01h1324.4v2158.3h-1324.4zm-355.61 1072.9v1269.6h2274.8v-1269.6z" display="block" fill="#00f" fill-rule="evenodd" stroke-width="1.2732"/>
+  </clipPath>
+ </defs>
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <g>
+  <g stroke="#000" stroke-width="50">
+   <rect transform="scale(-1)" x="-1760" y="-1984" width="1256.2" height="1256.2" rx="314.06" ry="314.06" fill="#803300" fill-rule="evenodd"/>
+   <rect x="817.81" y="727.75" width="78.516" height="1256.3" fill="#502d16"/>
+   <rect x="1367.4" y="727.75" width="78.516" height="1256.3" fill="#502d16"/>
+   <rect x="503.75" y="727.75" width="1256.3" height="628.13" rx="314.06" ry="314.06" fill="#28170b"/>
+  </g>
+  <g transform="matrix(1.2268 0 0 1.2268 -124.38 -528.5)" clip-path="url(#clipPath1056)" stroke-width="40.756">
+   <g transform="translate(32,-32)" stroke="#000">
+    <g transform="matrix(2.0601 -.55693 .58044 2.1258 -99.24 -531.57)" fill="#666" stroke-linejoin="round" stroke-width="18.794" style="paint-order:normal">
+     <path x="134.69014" y="618.70227" width="64" height="864" d="m134.69 618.7h64v864h-64z" style="paint-order:normal"/>
+     <a transform="translate(6.6901 10.702)" style="paint-order:normal">
+      <path d="m192 736s96 0 96 96c0 0 128 0 128-128 0 0 0-128-128-128 0 0 0 96-96 96v64-64" fill="#666" stroke="#000" stroke-linejoin="round" stroke-width="18.794" style="paint-order:normal"/>
+     </a>
+     <path d="m134.69 746.7s-96 0-96 96c0 0-128 0-128-128 0 0 0-128 128-128 0 0 0 96 96 96v64-64" style="paint-order:normal"/>
+    </g>
+    <path d="m942.11 729.15s10.226-67.263 80.489-57.258l140.53 20.011s70.263 10.005 60.037 77.269c0 0-70.263-10.005-80.489 57.258l-20.451 134.53s-10.226 67.264 60.037 77.269l210.79 30.016s-10.226 67.264-80.489 57.258l-140.53-20.011-173.84 1143.5-171.2 181.78-109.85-221.8 173.84-1143.5-140.53-20.011s-70.263-10.005-60.038-77.269l210.79 30.016s70.263 10.005 80.489-57.258l20.451-134.53s10.226-67.263-60.038-77.269" fill="#808080" stroke-width="40.756"/>
+    <g transform="matrix(-1.6122 -.40238 -.79088 3.3307 4005.6 -29.765)" fill="#b3b3b3" stroke-width="17.089">
+     <g transform="translate(1.0606 128.67)" fill="#b3b3b3" stroke="#000" stroke-width="17.089">
+      <path d="m1408 544c0 192 64 256 64 256v32c-84.309-58.771-96-288-96-288s0-96 32-192c0 0 32-96 64-128v32s-64 128-64 288z"/>
+      <path d="m1472 800v-544"/>
+     </g>
+    </g>
+   </g>
+  </g>
+ </g>
+ <g display="none">
+  <rect transform="scale(-1)" x="-1536" y="-2048" width="1024" height="1024" rx="256" ry="256" fill="#f0f" fill-rule="evenodd"/>
+  <rect x="512" y="1024" width="1024" height="512" rx="256" ry="256" fill="#de8787"/>
+ </g>
+</svg>

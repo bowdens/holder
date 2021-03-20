@@ -10,6 +10,8 @@ import { setNickname, selectNickname, setCachedPassword, setCurrentCode, setPass
 import { NavLink } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 
+import logo from "../logo.svg";
+
 
 
 const TopNav = () => {
@@ -28,8 +30,16 @@ const TopNav = () => {
                             dispatch(setCachedPassword({ cachedPassword: null }));
                             dispatch(setPasswordFor({ cachedPasswordFor: null }));
                         }}>
+                        <img
+                            src={logo}
+                            width="64"
+                            height="64"
+                            className="d-inline-block align-middle"
+                            alt="Extradimensional Logo"
+
+                        />
                         Extradimension.al
-                </Navbar.Brand>
+                    </Navbar.Brand>
                 </LinkContainer>
                 <Navbar.Toggle />
                 <Navbar.Collapse className="justify-content-end">
