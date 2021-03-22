@@ -4,8 +4,8 @@ const express = require('express');
 
 const app = express();
 const server = require('https').createServer({
-    key: fs.readFileSync('./localhost.key'),
-    cert: fs.readFileSync('./localhost.crt')
+    key: fs.readFileSync(process.env.ED_PRIVATE_CERT),
+    cert: fs.readFileSync(process.env.ED_PUBLIC_CERT)
 }, app);
 
 const io = require('socket.io')(server, {serveClient: false});
@@ -158,6 +158,6 @@ app.get("*", (req, res) => {
 });
 
 
-server.listen(5000, () => {
-    console.info("App listening on 5000");
+server.listen(process.env.ED_PORT, () => {
+    console.info(`App listening on ${process.env.ED_PORT}`);
 });
