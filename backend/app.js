@@ -34,7 +34,7 @@ client.connect((err, _db) => {
 });
 
 io.on('connection', socket => {
-    console.log(`connection found ${socket.id}`);
+    console.log(`${new Date().toUTCString()}: connection found ${socket.id}`);
 
     socket.on("join_bag", data => {
         console.log("bag joined...");
