@@ -20,7 +20,7 @@ const TopNav = () => {
     const validNickname = nickname.length > 0 && nickname.length <= 32;
 
     return (
-        <Navbar style={{ marginBottom: "10px" }} bg="primary">
+        <Navbar style={{ marginBottom: "10px" }} bg="primary" expand="md">
             <Container>
                 <LinkContainer to="/">
                     <Navbar.Brand
@@ -38,15 +38,15 @@ const TopNav = () => {
                             alt="Extradimensional Logo"
 
                         />
-                        Extradimension.al
+                        Extradimensional
                     </Navbar.Brand>
                 </LinkContainer>
-                <Navbar.Toggle />
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse className="justify-content-end">
                     <Form inline>
                         <Form.Label style={{ paddingRight: "4px" }}>
                             Nickname
-                    </Form.Label>
+                        </Form.Label>
                         <Form.Control
                             type="text"
                             placeholder="Set Nickname"

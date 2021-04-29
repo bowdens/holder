@@ -44,12 +44,7 @@ const Bag = () => {
     return (
         <>
             <Helmet>
-                <title>Bag {code}</title>
-                <meta property="og:title" content="extradimension.al - Shared Bag" />
-                <meta property="og:type" content="website" />
-                <meta property="og:url" content={location} />
-                <meta property="og:description" content={`Bag ${code} has been shared with you.`} />
-                <meta property="og:image" content={logo} />
+                <title>Bag {bag && bag.name ? bag.name : code}</title>
             </Helmet>
             <Row>
             </Row>
