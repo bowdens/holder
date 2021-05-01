@@ -1,3 +1,7 @@
+const bcrypt = require("bcrypt");
+const Joi = require("joi");
+const uuid = require("uuid");
+
 const genCode = () => {
     const randInt = m => Math.floor(Math.random() * m);
     const letters = "ACDEFGHJKMNPQRTWXY34679";
@@ -138,8 +142,8 @@ const addItem = (db, code, item) => {
     console.log(item);
     return new Promise(async (resolve, reject) => {
         const itemCount = db.collection("itemCount")
-        const doc = await itemCount.find({code});
-        if (doc) {
+        const doc = await itemCount.findOne({ code });
+        if (doc && doc.count) {
             if (doc.count >= 256) {
                 return reject(`Bag ${code} has reached its item capacity. Please remove some items before adding more.`);
             }
@@ -166,4 +170,109 @@ const addItem = (db, code, item) => {
     });
 }
 
-module.exports = { addItem, removeItem, updateBag, updateItem, findBag, createBag };
+const findUserByUid = (db, uid) => {
+    return new Promise(async (resolve, reject) => {
+        const users = db.collection("users");
+        const doc = await users.findOne({ uid });
+        if (doc) {
+            return resolve(doc);
+        } else {
+            return reject(`Could not find a user with uid ${uid}`);
+        }
+    });
+};
+
+const findUserByEmail = (db, email) => {
+    return new Promise(async (resolve, reject) => {
+        const users = db.collection("users");
+        const doc = await users.findOne({ email });
+        if (doc) {
+            return resolve(doc);
+        } else {
+            return reject(`Could not find a user with email ${email}`);
+        }
+    });
+}
+
+const createUser = (db, { username, email, password, acceptEmails }) => {
+    return new Promise(async (resolve, reject) => {
+        const users = db.collection("users");
+        const uid = uuid.v4();
+        return bcrypt.hash(password, 12)
+            .then(hash => {
+                return users.insertOne({
+                    uid,
+                    username,
+                    email,
+                    hash,
+                    acceptEmails,
+                    bags: [],
+                    favouriteBags: [],
+                    logins: [],
+                    creationDate: new Date(),
+                    verified: false,
+                    lastVerificationSent: null
+                });
+            }).then(res => {
+                //console.log(res);
+                return resolve(uid);
+            }).catch(err => {
+                console.error(err.code);
+                if (err.code === 11000) {
+                    return reject(`Email ${email} has already been registered.`)
+                }
+                return reject("Failed to create user. Please try again.");
+            })
+    })
+};
+
+const updateUserDetails = (db, uid, user) => {
+    return new Promise(async (resolve, reject) => {
+        const schema = Joi.object({
+            username: Joi.string()
+                .alphanum()
+                .min(3)
+                .max(30),
+            acceptEmails: Joi.boolean(),
+            verified: Joi.boolean(),
+            lastVerificationSent: Joi.date(),
+            bags: Joi.array(),
+            favouriteBags: Joi.array()
+        }).min(1);
+        const { error, value } = schema.validate(user);
+        if (error) {
+            return reject(error);
+        }
+        console.log(`updating user ${uid}:`);
+        console.log(value);
+        const users = db.collection("users");
+        users.findOneAndUpdate(
+            { uid },
+            { $set: { ...value } }
+        ).then(result => {
+            if (result.ok === 1) {
+                console.log(`user ${uid} updated`)
+                return resolve();
+            } else {
+                console.error(result);
+                return reject(`failed to update user ${uid}`);
+            }
+        }).catch(err => {
+            console.error(err);
+            return reject(err);
+        })
+    })
+}
+
+module.exports = {
+    addItem,
+    removeItem,
+    updateBag,
+    updateItem,
+    findBag,
+    createBag,
+    createUser,
+    findUserByEmail,
+    findUserByUid,
+    updateUserDetails,
+};

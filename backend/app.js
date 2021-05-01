@@ -1,8 +1,14 @@
 const fs = require('fs');
 const path = require('path');
 const express = require('express');
+const dotenv = require("dotenv");
+const morgan = require("morgan");
+
+dotenv.config();
 
 const app = express();
+app.use(express.json());
+app.use(morgan("tiny"));
 const server = require('https').createServer({
     key: fs.readFileSync(process.env.ED_PRIVATE_CERT),
     cert: fs.readFileSync(process.env.ED_PUBLIC_CERT)
@@ -21,16 +27,21 @@ const {
     updateItem,
     createBag
 } = require("./dbFuncs");
+const { signUp, signIn, verifyUser } = require('./api/v1/api');
+const { authenticateToken } = require('./authFuncs');
+const { sign } = require('crypto');
 
 let db = null;
 
 client.connect((err, _db) => {
     if (err) {
-        console.log("failed to connect to database");
-        console.log(err);
+        console.error("failed to connect to database");
+        console.error(err);
         client.close();
+    } else {
+        console.log("connected to databse");
+        db = _db.db(dbName);
     }
-    db = _db.db(dbName);
 });
 
 io.on('connection', socket => {
@@ -151,6 +162,24 @@ io.on('connection', socket => {
 });
 
 app.use(express.static(path.join(__dirname, 'client/build')));
+
+app.post("/signup", (req, res) => {
+    signUp(req, res, db);
+});
+
+app.post("/signin", (req, res) => {
+    signIn(req, res, db);
+});
+
+app.post("/verify", (req, res) => {
+    verifyUser(req, res, db);
+});
+
+app.get("/api/v1", authenticateToken, (req, res) => {
+    res.json({
+        message: "It works!"
+    });
+})
 
 app.get("*", (req, res) => {
     console.log(new Date().toUTCString() + ": got page request for " + req.path);
