@@ -18,7 +18,6 @@ const signUp = (req, res, db) => {
     console.log("in signup");
     const schema = Joi.object({
         username: Joi.string()
-            .alphanum()
             .min(3)
             .max(30)
             .required(),
